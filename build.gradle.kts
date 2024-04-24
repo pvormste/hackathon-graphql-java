@@ -20,6 +20,9 @@ dependencies {
     // GraphQL
     implementation("com.graphql-java:graphql-java:22.0")
 
+    // CSV
+    implementation("com.opencsv:opencsv:5.9")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
