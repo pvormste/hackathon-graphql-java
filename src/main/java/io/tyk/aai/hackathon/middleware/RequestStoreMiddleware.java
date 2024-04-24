@@ -5,10 +5,6 @@ import io.tyk.aai.hackathon.data.StoredRequest;
 
 public class RequestStoreMiddleware {
     public static void storeRequest(Context ctx) {
-        if (!ctx.path().equals("/graphql")) {
-            return;
-        }
-
         var headers = ctx.headerMap();
         var body = ctx.body();
         StoredRequest.store(headers, body);

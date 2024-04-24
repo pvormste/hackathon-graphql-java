@@ -7,6 +7,8 @@ import io.tyk.aai.hackathon.controller.RestController;
 import io.tyk.aai.hackathon.data.AnnualWorkingHours;
 import io.tyk.aai.hackathon.middleware.RequestStoreMiddleware;
 
+import static io.javalin.apibuilder.ApiBuilder.*;
+
 public class Main {
     public static void main(String[] args) {
         try {
@@ -18,14 +20,23 @@ public class Main {
         var graphqlController = new GraphQLController();
 
         var app = Javalin.create(config -> {
+            config.router.apiBuilder(() -> {
+                get("/", ctx -> ctx.result("Hello World"));
+                path("/graphql", () -> {
+                    before(RequestStoreMiddleware::storeRequest);
+                    post(graphqlController::GraphQLEndpoint);
+                });
 
-        })
-                .before(RequestStoreMiddleware::storeRequest)
-                .get("/", ctx -> ctx.result("Hello World"))
-                .post("/graphql", graphqlController::GraphQLEndpoint)
-                .get("/rest/annual-working-hours", RestController::getAllAnnualWorkingHours)
-                .get("/debug/requests", DebugController::getStoredRequests)
-                .delete("/debug/requests", DebugController::clearAllRequests)
-                .start(9555);
+                get("/rest/annual-working-hours", RestController::getAllAnnualWorkingHours);
+
+                path("/debug", () -> {
+                    path("/requests", () -> {
+                        get(DebugController::getStoredRequests);
+                        delete(DebugController::clearAllRequests);
+                    });
+                });
+
+            });
+        }).start(9555);
     }
 }
