@@ -14,13 +14,23 @@ public class GraphQLExecutor {
     private final GraphQL graphql;
 
     public static GraphQLExecutor createCountriesExecutor() {
-        return new GraphQLExecutor("graphql/countries-schema.graphqls", () -> {
-            return RuntimeWiring.newRuntimeWiring()
-                    .type("Query", typeWiring -> typeWiring
-                            .dataFetcher("countries", GraphQLCountriesFetcher.queryAllCountries)
-                    )
-                    .build();
-        });
+        return new GraphQLExecutor("graphql/countries-schema.graphqls", () -> RuntimeWiring.newRuntimeWiring()
+                .type("Query", typeWiring -> typeWiring
+                        .dataFetcher("countries", GraphQLCountriesFetcher.queryAllCountries)
+                )
+                .build()
+        );
+    }
+
+    public static GraphQLExecutor createAnnualWorkingHoursExecutor() {
+        return new GraphQLExecutor("graphql/annual-working-hours-schema.graphqls", () -> RuntimeWiring.newRuntimeWiring()
+                .type("Query", typeWiring -> typeWiring
+                        .dataFetcher("allAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.allAnnualWorkingHours)
+                        .dataFetcher("annualWorkingHoursByYear", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByYear)
+                        .dataFetcher("annualWorkingHoursByCountry", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountry)
+                )
+                .build()
+        );
     }
 
     public GraphQLExecutor(String schemaResourcePath, GraphQLRuntimeWiringBuilder wiringBuilder) {

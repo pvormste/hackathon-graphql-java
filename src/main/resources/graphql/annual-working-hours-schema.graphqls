@@ -1,10 +1,12 @@
 type Query {
     allAnnualWorkingHours: [AnnualWorkingHours]!
+    annualWorkingHoursByYear(year: Int!): [AnnualWorkingHours]!
+    annualWorkingHoursByCountry(countryAbbrev: String!): [AnnualWorkingHours]!
 }
 
 type AnnualWorkingHours {
     countryName: String!
     countryAbbrev: String!
     year: Int!
-    hours: Int!
+    hours: Float!
 }

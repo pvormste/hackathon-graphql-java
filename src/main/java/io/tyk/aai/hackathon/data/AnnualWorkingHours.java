@@ -14,7 +14,7 @@ public record AnnualWorkingHours(
         String countryName,
         String countryAbbrev,
         int year,
-        int hours
+        float hours
 ) {
     private static List<AnnualWorkingHours> data = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public record AnnualWorkingHours(
                     nextLine[0],
                     nextLine[1],
                     Integer.parseInt(nextLine[2]),
-                    Integer.parseInt(nextLine[3])
+                    Float.parseFloat(nextLine[3])
             ));
         }
 
@@ -53,5 +53,25 @@ public record AnnualWorkingHours(
 
     public static List<AnnualWorkingHours> all() {
         return data;
+    }
+
+    public static List<AnnualWorkingHours> byYear(int year) {
+        List<AnnualWorkingHours> result = new ArrayList<>();
+        for (AnnualWorkingHours annualWorkingHours : data) {
+            if (annualWorkingHours.year == year) {
+                result.add(annualWorkingHours);
+            }
+        }
+        return result;
+    }
+
+    public static List<AnnualWorkingHours> byCountry(String countryAbbrev) {
+        List<AnnualWorkingHours> result = new ArrayList<>();
+        for (AnnualWorkingHours annualWorkingHours : data) {
+            if (annualWorkingHours.countryAbbrev.equals(countryAbbrev)) {
+                result.add(annualWorkingHours);
+            }
+        }
+        return result;
     }
 }
