@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.*;
 
 public record StoredRequest(
+        String id,
         Map<String, String> headers,
         String body,
 
@@ -13,12 +14,13 @@ public record StoredRequest(
 ) {
     private static final List<StoredRequest> storedRequests = new ArrayList<>();
 
-    public static void store(Map<String, String> headers, String body) {
+    public static void store(String id, Map<String, String> headers, String body) {
         var date = new Date();
         storedRequests.add(new StoredRequest(
-           headers,
-           body,
-           date
+                id,
+                headers,
+                body,
+                date
         ));
     }
 
