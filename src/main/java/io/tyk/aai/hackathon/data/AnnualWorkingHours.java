@@ -1,11 +1,9 @@
 package io.tyk.aai.hackathon.data;
 
 import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVReaderHeaderAwareBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +14,7 @@ public record AnnualWorkingHours(
         String countryName,
         String countryAbbrev,
         int year,
-        int averageAnnualWorkingHours
+        int hours
 ) {
     private static List<AnnualWorkingHours> data = new ArrayList<>();
 

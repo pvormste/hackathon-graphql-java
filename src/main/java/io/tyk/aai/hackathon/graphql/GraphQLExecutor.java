@@ -10,25 +10,27 @@ import graphql.schema.idl.TypeDefinitionRegistry;
 
 import java.util.Map;
 
-public class GraphQLCountries {
+public class GraphQLExecutor {
     private final GraphQL graphql;
 
-    public GraphQLCountries() {
-        SchemaParser schemaParser = new SchemaParser();
-        TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(this.getClass().getClassLoader().getResourceAsStream("graphql/schema.graphqls"));
-
-        SchemaGenerator schemaGenerator = new SchemaGenerator();
-        RuntimeWiring runtimeWiring = buildRuntimeWiring();
-        GraphQLSchema schema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
-        graphql = GraphQL.newGraphQL(schema).build();
+    public static GraphQLExecutor createCountriesExecutor() {
+        return new GraphQLExecutor("graphql/countries-schema.graphqls", () -> {
+            return RuntimeWiring.newRuntimeWiring()
+                    .type("Query", typeWiring -> typeWiring
+                            .dataFetcher("countries", GraphQLCountriesFetcher.queryAllCountries)
+                    )
+                    .build();
+        });
     }
 
-    private RuntimeWiring buildRuntimeWiring() {
-        return RuntimeWiring.newRuntimeWiring()
-                .type("Query", typeWiring -> typeWiring
-                        .dataFetcher("countries", GraphQLCountriesFetcher.queryAllCountries)
-                )
-                .build();
+    public GraphQLExecutor(String schemaResourcePath, GraphQLRuntimeWiringBuilder wiringBuilder) {
+        SchemaParser schemaParser = new SchemaParser();
+        TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(this.getClass().getClassLoader().getResourceAsStream(schemaResourcePath));
+
+        SchemaGenerator schemaGenerator = new SchemaGenerator();
+        RuntimeWiring runtimeWiring = wiringBuilder.buildRuntimeWiring();
+        GraphQLSchema schema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
+        graphql = GraphQL.newGraphQL(schema).build();
     }
 
     public Map<String, Object> execute(String operation) {

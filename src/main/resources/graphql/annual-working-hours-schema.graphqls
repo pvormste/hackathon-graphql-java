@@ -1,0 +1,10 @@
+type Query {
+    allAnnualWorkingHours: [AnnualWorkingHours]!
+}
+
+type AnnualWorkingHours {
+    countryName: String!
+    countryAbbrev: String!
+    year: Int!
+    hours: Int!
+}
