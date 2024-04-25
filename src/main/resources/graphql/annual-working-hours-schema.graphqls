@@ -4,7 +4,19 @@ type Query {
     annualWorkingHoursByCountry(countryAbbrev: String!): [AnnualWorkingHours]!
 }
 
+type Mutation {
+    addAnnualWorkingHours(annualWorkingHours: NewAnnualWorkingHours!): AnnualWorkingHours
+    removeAnnualWorkingHours(countryAbbrev: String!, year: Int!): Boolean
+}
+
 type AnnualWorkingHours {
+    countryName: String!
+    countryAbbrev: String!
+    year: Int!
+    hours: Float!
+}
+
+input NewAnnualWorkingHours {
     countryName: String!
     countryAbbrev: String!
     year: Int!

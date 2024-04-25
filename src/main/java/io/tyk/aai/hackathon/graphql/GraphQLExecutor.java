@@ -29,6 +29,10 @@ public class GraphQLExecutor {
                         .dataFetcher("annualWorkingHoursByYear", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByYear)
                         .dataFetcher("annualWorkingHoursByCountry", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountry)
                 )
+                .type("Mutation", typeWiring -> typeWiring
+                        .dataFetcher("addAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.addAnnualWorkingHours)
+                        .dataFetcher("removeAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.removeAnnualWorkingHours)
+                )
                 .build()
         );
     }
@@ -43,8 +47,9 @@ public class GraphQLExecutor {
         graphql = GraphQL.newGraphQL(schema).build();
     }
 
-    public Map<String, Object> execute(String operation) {
+    public Map<String, Object> execute(String operationName, String operation) {
         ExecutionInput executionInput = ExecutionInput.newExecutionInput(operation)
+                .operationName(operationName)
                 .build();
 
         return graphql.execute(executionInput).toSpecification();

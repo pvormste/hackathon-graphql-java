@@ -74,4 +74,27 @@ public record AnnualWorkingHours(
         }
         return result;
     }
+
+    public static AnnualWorkingHours add(String countryName, String countryAbbrev, int year, float hours) {
+        var annualWorkingHours = new AnnualWorkingHours(countryName, countryAbbrev, year, hours);
+        data.add(annualWorkingHours);
+        return annualWorkingHours;
+    }
+
+    public static boolean remove(String countryAbbrev, int year) {
+        var foundElements = data.stream()
+                .filter(annualWorkingHours ->
+                    annualWorkingHours.countryAbbrev.equals(countryAbbrev) && annualWorkingHours.year == year
+                ).toList();
+
+        if (foundElements.isEmpty()) {
+            return false;
+        }
+
+        foundElements.forEach(annualWorkingHours ->
+                    data.remove(annualWorkingHours)
+                );
+
+        return true;
+    }
 }
