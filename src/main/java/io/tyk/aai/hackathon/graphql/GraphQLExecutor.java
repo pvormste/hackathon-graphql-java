@@ -47,9 +47,10 @@ public class GraphQLExecutor {
         graphql = GraphQL.newGraphQL(schema).build();
     }
 
-    public Map<String, Object> execute(String operationName, String operation) {
+    public Map<String, Object> execute(String operationName, String operation, Map<String, Object> variables) {
         ExecutionInput executionInput = ExecutionInput.newExecutionInput(operation)
                 .operationName(operationName)
+                .variables(variables)
                 .build();
 
         return graphql.execute(executionInput).toSpecification();

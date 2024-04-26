@@ -10,7 +10,7 @@ public class GraphQLController {
 
     public void GraphQLEndpoint(Context ctx) {
         var gqlRequest = ctx.bodyAsClass(GraphQLRequest.class);
-        var result = annualWorkingHoursAPI.execute(gqlRequest.operationName(), gqlRequest.query());
+        var result = annualWorkingHoursAPI.execute(gqlRequest.operationName(), gqlRequest.query(), gqlRequest.variables());
         ctx.json(result);
     }
 }
