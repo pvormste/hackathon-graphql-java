@@ -6,26 +6,33 @@ import java.util.*;
 
 public record StoredRequest(
         String id,
-        Map<String, String> headers,
-        String body,
-
+        String tag,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-        Date date
+        Date date,
+        Map<String, String> headers,
+        String body
 ) {
     private static final List<StoredRequest> storedRequests = new ArrayList<>();
 
-    public static void store(String id, Map<String, String> headers, String body) {
+    public static void store(String id, String tag, Map<String, String> headers, String body) {
         var date = new Date();
         storedRequests.add(new StoredRequest(
                 id,
+                tag,
+                date,
                 headers,
-                body,
-                date
+                body
         ));
     }
 
-    public static List<StoredRequest> getAll() {
+    public static List<StoredRequest> all() {
         return storedRequests;
+    }
+
+    public static List<StoredRequest> byTag(String tag) {
+        return storedRequests.stream()
+                .filter(storedRequest -> storedRequest.tag.equals(tag))
+                .toList();
     }
 
     public static void clear() {

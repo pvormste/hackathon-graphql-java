@@ -6,7 +6,13 @@ import io.tyk.aai.hackathon.data.StoredRequest;
 
 public class DebugController {
     public static void getStoredRequests(Context ctx) {
-        ctx.json(StoredRequest.getAll());
+        var tagParamValue = ctx.queryParam("tag");
+        if (tagParamValue != null && !tagParamValue.isEmpty()) {
+            ctx.json(StoredRequest.byTag(tagParamValue));
+            return;
+        }
+
+        ctx.json(StoredRequest.all());
     }
 
     public static void clearAllRequests(Context ctx) {
