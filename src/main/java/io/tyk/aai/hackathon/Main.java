@@ -1,6 +1,7 @@
 package io.tyk.aai.hackathon;
 
 import io.javalin.Javalin;
+import io.javalin.rendering.template.JavalinJte;
 import io.tyk.aai.hackathon.controller.DebugController;
 import io.tyk.aai.hackathon.controller.GraphQLController;
 import io.tyk.aai.hackathon.controller.RestController;
@@ -20,8 +21,9 @@ public class Main {
         var graphqlController = new GraphQLController();
 
         var app = Javalin.create(config -> {
+            config.fileRenderer(new JavalinJte());
             config.router.apiBuilder(() -> {
-                get("/", ctx -> ctx.result("Hello World"));
+                get("/", ctx -> ctx.render("index.jte"));
                 path("/graphql", () -> {
                     before(RequestStoreMiddleware::storeRequest);
                     post(graphqlController::GraphQLEndpoint);
