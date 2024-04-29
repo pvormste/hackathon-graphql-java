@@ -26,6 +26,7 @@ dependencies {
 
     // GraphQL
     implementation("com.graphql-java:graphql-java:22.0")
+    implementation("com.graphql-java:graphql-java-extended-scalars:22.0")
 
     // CSV
     implementation("com.opencsv:opencsv:5.9")

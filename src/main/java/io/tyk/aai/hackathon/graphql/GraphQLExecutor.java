@@ -2,6 +2,7 @@ package io.tyk.aai.hackathon.graphql;
 
 import graphql.ExecutionInput;
 import graphql.GraphQL;
+import graphql.scalars.ExtendedScalars;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
@@ -24,6 +25,8 @@ public class GraphQLExecutor {
 
     public static GraphQLExecutor createAnnualWorkingHoursExecutor() {
         return new GraphQLExecutor("graphql/annual-working-hours-schema.graphqls", () -> RuntimeWiring.newRuntimeWiring()
+                .scalar(ExtendedScalars.PositiveInt)
+                .scalar(ExtendedScalars.PositiveFloat)
                 .type("Query", typeWiring -> typeWiring
                         .dataFetcher("allAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.allAnnualWorkingHours)
                         .dataFetcher("annualWorkingHoursByYear", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByYear)
