@@ -30,7 +30,8 @@ public class GraphQLExecutor {
                 .type("Query", typeWiring -> typeWiring
                         .dataFetcher("allAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.allAnnualWorkingHours)
                         .dataFetcher("annualWorkingHoursByYear", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByYear)
-                        .dataFetcher("annualWorkingHoursByCountry", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountry)
+                        .dataFetcher("annualWorkingHoursByCountryAbbrev", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountryAbbrev)
+                        .dataFetcher("annualWorkingHoursByCountryName", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountryName)
                 )
                 .type("Mutation", typeWiring -> typeWiring
                         .dataFetcher("addAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.addAnnualWorkingHours)

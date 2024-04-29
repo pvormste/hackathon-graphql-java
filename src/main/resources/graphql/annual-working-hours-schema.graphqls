@@ -4,7 +4,8 @@ scalar PositiveFloat
 type Query {
     allAnnualWorkingHours: [AnnualWorkingHours]!
     annualWorkingHoursByYear(year: Int!): [AnnualWorkingHours]!
-    annualWorkingHoursByCountry(countryAbbrev: String!): [AnnualWorkingHours]!
+    annualWorkingHoursByCountryAbbrev(countryAbbrev: String!): [AnnualWorkingHours]!
+    annualWorkingHoursByCountryName(countryName: String!): [AnnualWorkingHours]!
 }
 
 type Mutation {

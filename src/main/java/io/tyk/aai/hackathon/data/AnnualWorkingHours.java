@@ -65,10 +65,20 @@ public record AnnualWorkingHours(
         return result;
     }
 
-    public static List<AnnualWorkingHours> byCountry(String countryAbbrev) {
+    public static List<AnnualWorkingHours> byCountryAbbrev(String countryAbbrev) {
         List<AnnualWorkingHours> result = new ArrayList<>();
         for (AnnualWorkingHours annualWorkingHours : data) {
             if (annualWorkingHours.countryAbbrev.equals(countryAbbrev)) {
+                result.add(annualWorkingHours);
+            }
+        }
+        return result;
+    }
+
+    public static List<AnnualWorkingHours> byCountryName(String countryName) {
+        List<AnnualWorkingHours> result = new ArrayList<>();
+        for (AnnualWorkingHours annualWorkingHours : data) {
+            if (annualWorkingHours.countryName.equals(countryName)) {
                 result.add(annualWorkingHours);
             }
         }
