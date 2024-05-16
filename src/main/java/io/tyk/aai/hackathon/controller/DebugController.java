@@ -8,11 +8,11 @@ public class DebugController {
     public static void getStoredRequests(Context ctx) {
         var tagParamValue = ctx.queryParam("tag");
         if (tagParamValue != null && !tagParamValue.isEmpty()) {
-            ctx.json(StoredRequest.byTag(tagParamValue));
+            ctx.json(StoredRequest.byTag(tagParamValue).reversed());
             return;
         }
 
-        ctx.json(StoredRequest.all());
+        ctx.json(StoredRequest.all().reversed());
     }
 
     public static void clearAllRequests(Context ctx) {
