@@ -27,11 +27,14 @@ public class GraphQLExecutor {
         return new GraphQLExecutor("graphql/annual-working-hours-schema.graphqls", () -> RuntimeWiring.newRuntimeWiring()
                 .scalar(ExtendedScalars.PositiveInt)
                 .scalar(ExtendedScalars.PositiveFloat)
+                .scalar(ExtendedScalars.GraphQLLong)
                 .type("Query", typeWiring -> typeWiring
                         .dataFetcher("allAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.allAnnualWorkingHours)
                         .dataFetcher("annualWorkingHoursByYear", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByYear)
                         .dataFetcher("annualWorkingHoursByCountryAbbrev", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountryAbbrev)
                         .dataFetcher("annualWorkingHoursByCountryName", GraphQLAnnualWorkingHoursFetcher.annualWorkingHoursByCountryName)
+                        .dataFetcher("getLongFromString", GraphQLAnnualWorkingHoursFetcher.getLongFromString)
+                        .dataFetcher("getLongFromLong", GraphQLAnnualWorkingHoursFetcher.getLongFromLong)
                 )
                 .type("Mutation", typeWiring -> typeWiring
                         .dataFetcher("addAnnualWorkingHours", GraphQLAnnualWorkingHoursFetcher.addAnnualWorkingHours)

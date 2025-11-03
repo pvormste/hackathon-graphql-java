@@ -24,4 +24,6 @@ public class GraphQLAnnualWorkingHoursFetcher {
       int year = environment.getArgument("year");
       return AnnualWorkingHours.remove(countryAbbrev, year);
     };
+    public static DataFetcher<Long> getLongFromString = environment -> Long.parseLong(environment.getArgument("strLong"));
+    public static DataFetcher<Long> getLongFromLong = environment -> environment.getArgument("long");
 }

@@ -1,11 +1,14 @@
 scalar PositiveInt
 scalar PositiveFloat
+scalar Long
 
 type Query {
     allAnnualWorkingHours: [AnnualWorkingHours]!
     annualWorkingHoursByYear(year: Int!): [AnnualWorkingHours]!
     annualWorkingHoursByCountryAbbrev(countryAbbrev: String!): [AnnualWorkingHours]!
     annualWorkingHoursByCountryName(countryName: String!): [AnnualWorkingHours]!
+    getLongFromString(strLong: String!): Long!
+    getLongFromLong(long: Long!): Long!
 }
 
 type Mutation {
